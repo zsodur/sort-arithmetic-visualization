@@ -1,12 +1,66 @@
-html{
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-	font-size:130%;
+html {
+	font-size: 130%;
 }
-body{
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-	background: #1b2027;
+
+body {
+    overflow: hidden;
+    background: #1b2027;
+}
+
+#animate1{
+	/*background: red;*/
+	width: 50rem;
+	height: 30rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	
+}
+#container1 {
+	display: inline-block;
+    position: absolute;
+	top: 40%;
+	left: 50%;
+	height: 20rem;
+
+	width: 2rem;
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+    /*background: black;*/
+}
+
+#container1 div {
+
+    /*width: 50px;*/
+    height: 0;
+    background: #4786b2;
+    position: absolute;
+    bottom: 0;
+    /*left: 0;*/
+    transition: left 1s linear,height 2s linear;
+}
+
+#container2 {
+    position: relative;
+    top: 20px;
+    height: 220px;
+    background: #1b2027;
+}
+
+#container2 div {
+    width: 50px;
+    height: 200px;
+    background: #4786b2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: left 1s linear;
 }

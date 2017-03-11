@@ -1,5 +1,5 @@
 html {
-	font-size: 130%;
+	font-size: 125%;
 }
 
 body {
@@ -38,29 +38,10 @@ body {
 }
 
 #container1 div {
-
-    /*width: 50px;*/
     height: 0;
     background: #4786b2;
     position: absolute;
     bottom: 0;
-    /*left: 0;*/
     transition: left 1s linear,height 2s linear;
 }
 
-#container2 {
-    position: relative;
-    top: 20px;
-    height: 220px;
-    background: #1b2027;
-}
-
-#container2 div {
-    width: 50px;
-    height: 200px;
-    background: #4786b2;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: left 1s linear;
-}

@@ -9,6 +9,18 @@
 </head>
 
 <body> 
+    <div class="nav">
+    <div class="array">
+        <input type="text" id="array" name="">
+        <input type="button" value="随机" name="">
+    </div>
+        <div class="sort">冒泡排序</div>
+        <div class="sort">选择排序</div>
+        <div class="sort">快速排序</div>
+        <div class="sort">归并排序</div>
+        <div class="sort">快速排序</div>
+        <div class="sort">希尔排序</div>
+    </div>
     <div id="animate1">
     <div id="container1">
         
@@ -28,15 +40,31 @@
     <script src="js/sort.js"></script>
     <script src="js/main.js"></script>
     <script type="text/javascript">
+    $(function(){  
+      
+    $('#array').bind('input propertychange', function() {  
+        console.log($('#array').val())
+        var arrStr = $('#array').val()
+        if(arrStr.charAt(arrStr.length - 1)===','){
+            arrStr=arrStr.Substring(0,arrStr.Length - 1)
+        }
+       var arr = arrStr.split(",")
+       var arrNum = []
+       for (var i = 0; i < arr.length; i++) {
+            arrNum.push(parseInt(arr[i]))
+            
+       }
+       console.log(arrNum)
+       frames = new Frames(arrNum)
+            frames.creatSquares('#container1')
+    });  
+      
+    })  
+        // var p = [3,6,1,7,9,3,6,8,6,1];
+    // var p = [32,5,1,5,4,3,2];
 
-    var p = [3,6,1,7,9,3,6,8,6,1];
-
-    frames = new Frames(p)
-    frames.creatSquares('#container1')
-    frames.creatData(sort2)
-    animate = new Animation(6)
-    animate.frames = frames.data
-    animate.play()
+    
+    
 
     // frames2 = new Frames(p)
     // frames2.creatdivs('#container2')
@@ -46,6 +74,9 @@
     // animate2.play()
 
     document.getElementById('btn1').onclick = function() {
+        frames.creatData(sort4)
+        animate = new Animation(6)
+        animate.frames = frames.data
         animate.play()
         // animate2.play()
     }

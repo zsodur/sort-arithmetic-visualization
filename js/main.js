@@ -96,65 +96,127 @@ function sort3(frames,arr) {
     sort3(frames,right)    
 };
 
-function sort4(frames){
 
+function sort6(frames,arr) {
+  
     frames.add()
-    frames.finishSquare(0)
-
-    for(var i = 1; i < frames.squares.length; i++){
-    frames.activeSquare(i,false)
-    frames.moveSquare(i,i)
-    frames.active2Square(i-1)
-    if(frames.squares[i].val < frames.squares[i-1].val){
-
-
-      var guardIndex = i
-      
-
-      var j = i - 1;
-
-      frames.exchangeSquare(i,j)
-      frames.finishSquare(i,false)
-      
-      // while(j > 0 && frames.squares[j].val < frames.squares[j-1].val){
-      //   frames.active2Square(j-1)
-      //   frames.exchangeSquare(j-1,j)
-      //   frames.finishSquare(j)
-      //   j--
-    
-
-      // }
-
-      for (var k = j; k > 0; k--) {
-            frames.active2Square(k-1)
-
-          if(frames.squares[k].val < frames.squares[k-1].val){
-            frames.exchangeSquare(k-1,k)
-            
-            frames.finishSquare(k,false)
-            j--
-          }else{
-            frames.finishSquare(k-1,false)
-            break
-
-          }
-}frames.finishSquare(j,false)
-            frames.moveSquare(j,j)
-    
-    //       }
-    //   }
-
-      
-    }else{
-
-        for (var k = 0; k < i; k++) {
-        frames.finishSquare(k, false)
+  var a = []
+    for (var i = 0; i < frames.squares.length; i++) {
+        a.push(i)
     }
+    var arr = arr || a
+    var length = arr.length;
+    if (arr.length <= 1) { return arr}
+    var num = Math.ceil(length/2);
+    var left = sort6(frames,arr.slice(0, num));
+    var right = sort6(frames,arr.slice(num, length));
+    console.log(left,right)
+    return merge(frames,left, right);
+ 
+}
 
-        frames.finishSquare(i,false)
-        frames.moveSquare(i,i)
-    
+function merge(frames,left, right) {
+    frames.add()
+console.log(left,right)
+  var a = new Array();
+  if(left.length !== 0){
+    positionx = frames.squares[left[0]].positionx
+}else{
 
+    positionx = frames.squares[right[0]].positionx
+}
+  while (left.length > 0 && right.length > 0) {
+    console.log(1111)
+    if (frames.squares[left[0]].val <= frames.squares[right[0]].val) {
+        frames.moveSquare(left[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
+        var temp = left.shift();
+        a.push(temp);
+    } else {
+        frames.moveSquare(right[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
+        var temp = right.shift();
+        a.push(temp);
     }
   }
+  while (left.length > 0) {
+        frames.moveSquare(left[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
+        var temp = left.shift();
+        a.push(temp);
+  }
+  while (right.length > 0) {
+        frames.moveSquare(right[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
+       var temp = right.shift();
+        a.push(temp);
+    }
+  
+  console.log('a',a)
+  for (var i = 0; i < a.length-1; i++) {
+        frames.changePositiony(a[i],false)
+  }
+  frames.changePositiony(a[a.length-1])
+  console.log(a);
+  console.log("-----------------------------");
+  return a;
 }
+
+
+function sort4(frames){
+    frames.add()
+    frames.finishSquare(0)
+    for(var i = 1; i < frames.squares.length; i++){
+        frames.activeSquare(i,false)
+        frames.moveSquare(i,i)
+        frames.active2Square(i-1)
+        if(frames.squares[i].val < frames.squares[i-1].val){
+            var guardIndex = i
+            var j = i 
+            for (var k = j; k > 0; k--) {
+                frames.active2Square(k-1)
+                if(frames.squares[k].val < frames.squares[k-1].val){
+                    frames.exchangeSquare(k-1,k)
+                    frames.finishSquare(k,false)
+                    j--
+                }else{
+                    frames.finishSquare(k-1,false)
+                    break
+                }
+            }
+            frames.finishSquare(j,false)
+            frames.moveSquare(j,j)     
+        }else{
+            for (var k = 0; k < i; k++) {
+            frames.finishSquare(k, false)
+        }
+            frames.finishSquare(i,false)
+            frames.moveSquare(i,i)
+        }
+    }
+}
+
+function sort5(frames) {
+    frames.add()
+    var length = frames.squares.length;
+    var gap = Math.round(length / 2);
+
+    for (gap; gap > 0; gap = Math.round(gap / 2 - 0.1)) {
+        for (var i = gap; i < length; i++) {
+            frames.activeSquare(i)
+            var insert =  frames.squares[i].val;
+            var index = i;
+            var index2;
+            for (var j = i; j >= 0; j -= gap) {
+                frames.active2Square(j)
+                
+                if ( insert < frames.squares[j].val) {
+
+                    frames.finishSquare(j+gap)
+                    frames.exchangeSquare(j,j+gap)
+
+                }else{
+                    frames.normalSquare(j)
+                }
+            }
+           
+        }
+    }
+}
+

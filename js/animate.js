@@ -2,7 +2,7 @@ function Animation(speed) {
     this.frames = []
     this.setp = 0
     this.interval = speed * 300
-    this._interval = speed * 100
+    this._interval = speed * 50
     this.isNotmove = false
     this.status = 0
 }
@@ -16,6 +16,13 @@ Animation.prototype.play = function() {
 Animation.prototype.stop = function() {
     this.status = 0
 }
+
+Animation.prototype.close = function() {
+    this.frames = []
+    this.setp = 0
+    this.status = 0
+}
+
 Animation.prototype.run = function() {
     var _this = this
     var interval = this.isNotmove ? this._interval : this.interval

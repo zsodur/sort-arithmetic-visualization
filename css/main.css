@@ -54,18 +54,18 @@ body {
 .sort{
 	background: #394453;
 	width: 100%;
-	height:3.5rem;
+	height:3rem;
 	margin-top: 1rem;
 	font-family: "Microsoft Yahei";
-	line-height: 3.5rem;
+	line-height: 3rem;
 	text-align:center;
 	color: #fff;
 	cursor: pointer;
 
 }
 
-#animate1{
-	/*background: red;*/
+/*#animate1{
+	background: red;
 	width: 50rem;
 	height: 30rem;
 	position: absolute;
@@ -77,24 +77,27 @@ body {
 	-o-transform: translate(-50%,-50%);
 	transform: translate(-50%,-50%);
 	
-}
+}*/
 #container1 {
+	/*background: red;*/
 	display: inline-block;
     position: absolute;
-	top: 40%;
+	top: 2rem;
 	left: 50%;
-	height: 20rem;
+	height: 35%;
 
 	width: 2rem;
-	-webkit-transform: translate(-50%,-50%);
-	-moz-transform: translate(-50%,-50%);
-	-ms-transform: translate(-50%,-50%);
-	-o-transform: translate(-50%,-50%);
-	transform: translate(-50%,-50%);
+	-webkit-transform: translate(-50%,0);
+	-moz-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	-o-transform: translate(-50%,0);
+	transform: translate(-50%,0);
     /*background: black;*/
 }
 
-#container1 div {
+#container1 div ,
+#container3 div,
+#container4 div{
     height: 0;
     background: #4786b2;
     position: absolute;
@@ -102,11 +105,13 @@ body {
     text-align: center;
 }
 
-#container1 div span{
+#container1 div span,
+#container3 div span,
+#container4 div span{
 
     /*text-align: center;*/
 	position:absolute;
-	bottom:-2.5rem;
+	bottom:-2rem;
 	color: #325c79;
 	-webkit-transform: translate(-50%,-50%);
 	-moz-transform: translate(-50%,-50%);
@@ -117,3 +122,57 @@ body {
 }
 
 
+#container2 {
+	/*background: red;*/
+    position: absolute;
+	top: 0.5rem;
+	left: 50%;
+	height: 90%;
+
+	width: 20rem;
+	-webkit-transform: translate(-50%,0);
+	-moz-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	-o-transform: translate(-50%,0);
+	transform: translate(-50%,0);
+    /*background: black;*/
+}
+
+#container3 {
+	/*background: blue;*/
+	display: inline-block;
+    position: absolute;
+	top: 0rem;
+	left: 50%;
+	height: 20%;
+
+	width: 2rem;
+	-webkit-transform: translate(-50%,0);
+	-moz-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	-o-transform: translate(-50%,0);
+	transform: translate(-50%,0);
+
+}
+
+#container4 {
+	/*background: blue;*/
+	display: inline-block;
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 20%;
+
+	width: 2rem;
+	-webkit-transform: translate(-50%,0);
+	-moz-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	-o-transform: translate(-50%,0);
+	transform: translate(-50%,0);
+
+}
+
+.sortActive{
+	border:2px solid #fec675;
+	border-left: 0;
+}

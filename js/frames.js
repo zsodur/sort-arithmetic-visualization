@@ -2,6 +2,7 @@ function Frames(arr) {
     this.arr = arr
     this.data = []
     this.squares = []
+    this.parentHeight = ''
 }
 
 Array.max = function(array) {
@@ -12,6 +13,8 @@ Frames.prototype.creatSquares = function(parent) {
     this.squares = []
     var length = this.arr.length
     var max = Array.max(this.arr)
+    this.parentHeight = $(parent).height()
+    // alert((50+this.parentHeight)
     $(parent).html('')
     for (var i = 0; i < length; i++) {
         var o = {
@@ -25,7 +28,7 @@ Frames.prototype.creatSquares = function(parent) {
                 transition: 'transform 1s linear',
                 width: '2rem',
                 background: '#325c79',
-                height: this.arr[i] * (10 / max) + 'rem',
+                height: this.arr[i] * (this.parentHeight / max) + 'px',
                 opacity: 1
             }
         }
@@ -40,8 +43,8 @@ Frames.prototype.creatSquares = function(parent) {
 Frames.prototype.exchangeSquare = function(i, j , isAdd = true) {
     // this.squares[i].css.left = j * 2.5 + 'rem'
     // this.squares[j].css.left = i * 2.5+ 'rem'
-    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[i].positiony*12+ 'rem)'
-    this.squares[j].css.transform = 'translate(' + (i - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[j].positiony*12+ 'rem)'
+    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[i].positiony*(50+this.parentHeight)+ 'px)'
+    this.squares[j].css.transform = 'translate(' + (i - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
     var z = this.squares[i]
     this.squares[i] = this.squares[j]
     this.squares[j] = z
@@ -51,7 +54,7 @@ Frames.prototype.exchangeSquare = function(i, j , isAdd = true) {
 Frames.prototype.moveSquare2 = function(i, j, isAdd = true) {
     // this.squares[i].css.left = j * 2.5 + 'rem'
     // this.squares[j].css.left = i * 2.5+ 'rem'
-    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[i].positiony*12+ 'rem)'
+    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
     this.squares[i] = this.squares[j]
     isAdd && this.add()
 }
@@ -66,7 +69,7 @@ Frames.prototype.moveSquare = function(i, j, isAdd = true) {
         this.squares[i].positiony = 0
     } else {
         this.squares[i].positiony = 1
-        this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 + 'rem' + ',12rem) '
+        this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 + 'rem,' +(50+this.parentHeight)+ 'px)'
 
     }
     this.squares[i].positionx = j
@@ -99,6 +102,7 @@ Frames.prototype.add = function() {
 };
 
 Frames.prototype.creatData = function(fun) {
+    this.data = []
     fun(this)
 }
 

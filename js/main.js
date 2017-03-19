@@ -1,222 +1,159 @@
-function clone(p, c) {
-    var c = c || {};
-    for (var prop in p) {
-        if (typeof p[prop] === 'object') {
-            c[prop] = (p[prop].constructor === Array) ? [] : {}
-            clone(p[prop], c[prop])
-        } else {
-            c[prop] = p[prop]
-        }
-    }
-    return c
-}
-
-function sort1(frames) {
-
-    for (var i = 0; i < frames.squares.length - 1; i++) {
-        frames.add()
-        minObj = clone(frames.squares[i])
-        frames.activeSquare(i)
-        minIndex = i
-        for (var j = i + 1; j < frames.squares.length; j++) {
-            frames.active2Square(j)
-            if (minObj.val > frames.squares[j].val) {
-                minObj = clone(frames.squares[j])
-                frames.activeSquare(j, false)
-                frames.normalSquare(minIndex)
-                minIndex = j
+var select = {
+    data: [3],
+    init: function() {
+        var _this = this
+        $('.sort').click(function() {
+            var index = $('.sort').index(this)
+            if (_this.data.indexOf(index) === -1) {
+                _this.data.push(index)
             } else {
-                frames.normalSquare(j, false)
+                _this.data.splice(_this.data.indexOf(index), 1)
             }
-        }
-        i !== minIndex && frames.exchangeSquare(i, minIndex)
-        frames.finishSquare(i)
-    }
-    frames.finishSquare(frames.squares.length - 1)
-
-}
-
-function sort2(frames) {
-    for (var i = 0; i < frames.squares.length - 1; i++) {
-        frames.add()
-        frames.activeSquare(i)
-        for (var j = i + 1; j < frames.squares.length; j++) {
-            frames.active2Square(j)
-            if (frames.squares[i].val > frames.squares[j].val) {
-                frames.activeSquare(j)
-                frames.exchangeSquare(i, j)
-                frames.normalSquare(j)
-            } else {
-                frames.normalSquare(j, false)
+            if (_this.data.length > 2) {
+                _this.data.shift()
             }
+            
+
+            _this.creatSquares()
+        })
+
+        $('#array').bind('input propertychange', function() {
+
+            _this.creatSquares()
+            console.log(11111)
+
+
+        });
+
+    },
+    random:function () {
+
+        var num = Math.random()*5 + 10
+        num = parseInt(num, 10)
+        var arr = []
+        for (var i = 0; i < num; i++) {
+            arr.push(parseInt((Math.random()*10 + 1),10))
         }
-        frames.finishSquare(i)
-    }
-    frames.finishSquare(frames.squares.length - 1)
+        $('#array').val(arr.join(','))
+        this.creatSquares()
 
-}
-
-
-function sort3(frames,arr) {
-    var a = []
-    for (var i = 0; i < frames.squares.length; i++) {
-        a.push(i)
-    }
-    var arr = arr || a
-    if (arr.length <= 1) { return}
-    for (var i = 0; i < frames.squares.length; i++){
-        if(arr.indexOf(i)===-1){
-            frames.darkSquare(i,false)
-        }else{
-            frames.lightSquare(i,false)
-        }
-　　}
-    frames.add()
-    var pivotIndex = Math.floor(arr.length / 2)
-　　var pivot = frames.squares[arr[pivotIndex]]; // {val:,el:,css:}
-　　var left = [];
-　　var right = [];
-    frames.activeSquare(arr[pivotIndex])
-    var ggggg = frames.squares[arr[0]].positionx
-　　for (var i = 0; i < arr.length; i++){
-        if(arr[i]===arr[pivotIndex]){continue;}
-        frames.active2Square(arr[i])
-　　　　if (frames.squares[arr[i]].val < pivot.val) {
-            frames.moveSquare(arr[i],pivot.positionx-left.length-1)
-　　　　　　left.unshift(arr[i]);
-　　　　} else {
-            frames.moveSquare(arr[i],right.length+1+pivot.positionx)
-　　　　　　right.push(arr[i]);
-　　　　}
-        frames.normalSquare(arr[i],false)
-　　}
-    
-    frames.moveSquare(arr[pivotIndex],pivot.positionx)
-　　sort3(frames,left)
-    sort3(frames,right)    
-};
-
-
-function sort6(frames,arr) {
-  
-    frames.add()
-  var a = []
-    for (var i = 0; i < frames.squares.length; i++) {
-        a.push(i)
-    }
-    var arr = arr || a
-    var length = arr.length;
-    if (arr.length <= 1) { return arr}
-    var num = Math.ceil(length/2);
-    var left = sort6(frames,arr.slice(0, num));
-    var right = sort6(frames,arr.slice(num, length));
-    console.log(left,right)
-    return merge(frames,left, right);
- 
-}
-
-function merge(frames,left, right) {
-    frames.add()
-console.log(left,right)
-  var a = new Array();
-  if(left.length !== 0){
-    positionx = frames.squares[left[0]].positionx
-}else{
-
-    positionx = frames.squares[right[0]].positionx
-}
-  while (left.length > 0 && right.length > 0) {
-    console.log(1111)
-    if (frames.squares[left[0]].val <= frames.squares[right[0]].val) {
-        frames.moveSquare(left[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
-        var temp = left.shift();
-        a.push(temp);
-    } else {
-        frames.moveSquare(right[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
-        var temp = right.shift();
-        a.push(temp);
-    }
-  }
-  while (left.length > 0) {
-        frames.moveSquare(left[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
-        var temp = left.shift();
-        a.push(temp);
-  }
-  while (right.length > 0) {
-        frames.moveSquare(right[0],a.length===0?positionx:frames.squares[a[a.length-1]].positionx+1)
-       var temp = right.shift();
-        a.push(temp);
-    }
-  
-  console.log('a',a)
-  for (var i = 0; i < a.length-1; i++) {
-        frames.changePositiony(a[i],false)
-  }
-  frames.changePositiony(a[a.length-1])
-  console.log(a);
-  console.log("-----------------------------");
-  return a;
-}
-
-
-function sort4(frames){
-    frames.add()
-    frames.finishSquare(0)
-    for(var i = 1; i < frames.squares.length; i++){
-        frames.activeSquare(i,false)
-        frames.moveSquare(i,i)
-        frames.active2Square(i-1)
-        if(frames.squares[i].val < frames.squares[i-1].val){
-            var guardIndex = i
-            var j = i 
-            for (var k = j; k > 0; k--) {
-                frames.active2Square(k-1)
-                if(frames.squares[k].val < frames.squares[k-1].val){
-                    frames.exchangeSquare(k-1,k)
-                    frames.finishSquare(k,false)
-                    j--
-                }else{
-                    frames.finishSquare(k-1,false)
-                    break
-                }
+        
+    },
+    creatSquares: function() {
+$('.sort').removeClass('sortActive')
+            for (var i = 0; i < this.data.length; i++) {
+                $('.sort').eq(this.data[i]).addClass('sortActive')
             }
-            frames.finishSquare(j,false)
-            frames.moveSquare(j,j)     
-        }else{
-            for (var k = 0; k < i; k++) {
-            frames.finishSquare(k, false)
+        animate && animate.close()
+        animate2 && animate2.close()
+        var arrStr = $('#array').val()
+            // if (this.data.length === 0 || arrStr.length === 0) {
+            //     return
+            // }
+
+        if (arrStr.charAt(arrStr.length - 1) === ',') {
+            arrStr = arrStr.Substring(0, arrStr.Length - 1)
         }
-            frames.finishSquare(i,false)
-            frames.moveSquare(i,i)
+        var arr = arrStr.split(",")
+        var arrNum = []
+        for (var i = 0; i < arr.length; i++) {
+            arrNum.push(parseInt(arr[i]))
+
         }
+        console.log(arrNum)
+
+        frames = new Frames(arrNum)
+
+
+
+
+        if (this.data.length === 2) {
+            $('#container1').html('')
+            frames.creatSquares('#container3')
+            frames.creatData(getSortFun(this.data[0]))
+            animate = new Animation(5)
+            animate.frames = frames.data
+            frames.creatSquares('#container4')
+            frames.creatData(getSortFun(this.data[1]))
+            animate2 = new Animation(5)
+            animate2.frames = frames.data
+            return
+        }
+            $('#container3').html('')
+            $('#container4').html('')
+        frames.creatSquares('#container1')
+        if (this.data.length === 0) {
+            return
+        }
+            frames.creatData(getSortFun(this.data[0]))
+            animate = new Animation(5)
+            animate.frames = frames.data
+        
+
+    }
+}
+var animate;
+var animate2;
+select.init()
+select.random()
+
+
+function getSortFun(index) {
+    switch (index) {
+        case 0:
+            return sort1
+            break;
+        case 1:
+            return sort2
+            break;
+        case 2:
+            return sort3
+            break;
+        case 3:
+            return sort4
+            break;
+        case 4:
+            return sort5
+            break;
+        case 5:
+            return sort6
+            break;
     }
 }
 
-function sort5(frames) {
-    frames.add()
-    var length = frames.squares.length;
-    var gap = Math.round(length / 2);
+// var p = [3,6,1,7,9,3,6,8,6,1];
+// var p = [32,5,1,5,4,3,2];
 
-    for (gap; gap > 0; gap = Math.round(gap / 2 - 0.1)) {
-        for (var i = gap; i < length; i++) {
-            frames.activeSquare(i)
-            var insert =  frames.squares[i].val;
-            var index = i;
-            var index2;
-            for (var j = i; j >= 0; j -= gap) {
-                frames.active2Square(j)
-                
-                if ( insert < frames.squares[j].val) {
 
-                    frames.finishSquare(j+gap)
-                    frames.exchangeSquare(j,j+gap)
 
-                }else{
-                    frames.normalSquare(j)
-                }
-            }
-           
-        }
-    }
+
+// frames2 = new Frames(p)
+// frames2.creatdivs('#container2')
+// frames2.creatData(sort2)
+// animate2 = new Animation(5)
+// animate2.frames = frames2.data
+// animate2.play()
+
+document.getElementById('btn1').onclick = function() {
+    // frames.creatData(sort4)
+    // animate = new Animation(6)
+    // animate.frames = frames.data
+    // animate.play()
+
+
+    animate.play()
+    animate2 && animate2.play()
+        // animate2.play()
 }
-
+document.getElementById('btn2').onclick = function() {
+    animate.next()
+        // animate2.next()
+}
+document.getElementById('btn3').onclick = function() {
+    animate.prev()
+        // animate2.prev()
+}
+document.getElementById('btn4').onclick = function() {
+    animate.stop()
+        // animate2.stop()
+}

@@ -93,14 +93,19 @@ function sort3(frames,arr,arr2) {
 　　　　}
         frames.normalSquare(arr[i],false)
 　　}
-    if (arr2) {
-        for (var i = 0; i < arr2.length; i++) {
-            frames.moveSquare(arr2[i],right.length+1+i+pivot.positionx,false)
-        }
+    var bbbb = Math.floor((left.length-right.length)/2)
+    for (var i = 0; i < arr.length; i++) {
+         frames.moveSquare(arr[i],frames.squares[arr[i]].positionx+bbbb,false)
     }
-    sort3(frames,left,[pivotIndex].concat(right))    
+    frames.add()
 
-    sort3(frames,right,left.concat([pivotIndex]))    
+    sort3(frames,left)    
+    sort3(frames,right)  
+//     for (var i = 0; i < frames.squares.length; i++){
+//         frames.lightSquare(i,false)
+//         frames.finishSquare(i,false)
+// 　　}  
+//     frames.add()
 };
 
 // 归并
@@ -239,3 +244,21 @@ function sort6(frames) {
     }
 }
 
+function sort6(frames) {
+    frames.add()
+    var len = frames.squares.length;
+    for (var fraction = Math.floor(len / 2); fraction > 0; fraction = Math.floor(fraction / 2)) {
+        for (var i = fraction; i < len; i++) {
+            frames.finishSquare(i)
+            for (var j = i - fraction; j >= 0; j -= fraction) {
+
+            frames.activeSquare(j)
+            frames.active2Square(fraction + j)
+                if (frames.squares[j].val > frames.squares[fraction + j].val) {
+                frames.exchangeSquare(j, fraction + j)
+                }
+            }
+
+        }
+    }
+}

@@ -13,7 +13,7 @@ Frames.prototype.creatSquares = function(parent) {
     this.squares = []
     var length = this.arr.length
     var max = Array.max(this.arr)
-    this.parentHeight = $(parent).height()
+    this.parentHeight = Math.floor($(parent).height())
     // alert((50+this.parentHeight)
     $(parent).html('')
     for (var i = 0; i < length; i++) {
@@ -25,7 +25,6 @@ Frames.prototype.creatSquares = function(parent) {
             css: {
                 // left: i * 3 + 'rem',
                 transform: 'translate(' + (i - length / 2 + 0.5) * 2.5 + 'rem' + ')',
-                transition: 'transform 1s linear',
                 width: '2rem',
                 background: '#325c79',
                 height: this.arr[i] * (this.parentHeight / max) + 'px',
@@ -33,7 +32,7 @@ Frames.prototype.creatSquares = function(parent) {
             }
         }
         this.squares.push(o)
-        $(parent).append($('<div class="square' + i + '"><span>'+this.arr[i]+'</span></div>'))
+        $(parent).append($('<div class="square square' + i + '"><span>'+this.arr[i]+'</span></div>'))
         $(o.el).css(o.css)
     }
 };
@@ -43,8 +42,8 @@ Frames.prototype.creatSquares = function(parent) {
 Frames.prototype.exchangeSquare = function(i, j , isAdd = true) {
     // this.squares[i].css.left = j * 2.5 + 'rem'
     // this.squares[j].css.left = i * 2.5+ 'rem'
-    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[i].positiony*(50+this.parentHeight)+ 'px)'
-    this.squares[j].css.transform = 'translate(' + (i - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
+    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem, ' +this.squares[i].positiony*(50+this.parentHeight)+ 'px)'
+    this.squares[j].css.transform = 'translate(' + (i - this.arr.length / 2 + 0.5) * 2.5 +'rem, ' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
     var z = this.squares[i]
     this.squares[i] = this.squares[j]
     this.squares[j] = z
@@ -54,7 +53,7 @@ Frames.prototype.exchangeSquare = function(i, j , isAdd = true) {
 Frames.prototype.moveSquare2 = function(i, j, isAdd = true) {
     // this.squares[i].css.left = j * 2.5 + 'rem'
     // this.squares[j].css.left = i * 2.5+ 'rem'
-    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem,' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
+    this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 +'rem, ' +this.squares[j].positiony*(50+this.parentHeight)+ 'px)'
     this.squares[i] = this.squares[j]
     isAdd && this.add()
 }
@@ -69,7 +68,7 @@ Frames.prototype.moveSquare = function(i, j, isAdd = true) {
         this.squares[i].positiony = 0
     } else {
         this.squares[i].positiony = 1
-        this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 + 'rem,' +(50+this.parentHeight)+ 'px)'
+        this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 + 'rem, ' +(50+this.parentHeight)+ 'px)'
 
     }
     this.squares[i].positionx = j
@@ -81,9 +80,9 @@ Frames.prototype.changePositiony = function(i, isAdd = true) {
     // this.squares[j].css.left = i * 2.5+ 'rem'
     if (this.squares[i].positiony) {
         this.squares[i].positiony = 0
-        this.squares[i].css.transform = 'translate(' + (this.squares[i].positionx - this.arr.length / 2 + 0.5) * 2.5 + 'rem' + ') '
+        this.squares[i].css.transform = 'translate(' + (this.squares[i].positionx - this.arr.length / 2 + 0.5) * 2.5 + 'rem' + ')'
     } else {
-        this.squares[i].css.transform = 'translate(' + (this.squares[i].positionx - this.arr.length / 2 + 0.5) * 2.5 + 'rem' + ',12rem) '
+        this.squares[i].css.transform = 'translate(' + (this.squares[i].positionx - this.arr.length / 2 + 0.5) * 2.5 + 'rem, ' +(50+this.parentHeight)+ 'px)'
         this.squares[i].positiony = 1
     }
     isAdd && this.add()

@@ -1,5 +1,5 @@
 var select = {
-    data: [3],
+    data: [5],
     init: function() {
         var _this = this
         $('.sort').click(function() {
@@ -24,6 +24,10 @@ var select = {
 
 
         });
+
+        $('[type="button"]').click(function (  ) {
+                _this.random()
+        })
 
     },
     random:function () {
@@ -71,11 +75,11 @@ $('.sort').removeClass('sortActive')
             $('#container1').html('')
             frames.creatSquares('#container3')
             frames.creatData(getSortFun(this.data[0]))
-            animate = new Animation(5)
+            animate = new Animation(9)
             animate.frames = frames.data
             frames.creatSquares('#container4')
             frames.creatData(getSortFun(this.data[1]))
-            animate2 = new Animation(5)
+            animate2 = new Animation(9)
             animate2.frames = frames.data
             return
         }
@@ -86,7 +90,7 @@ $('.sort').removeClass('sortActive')
             return
         }
             frames.creatData(getSortFun(this.data[0]))
-            animate = new Animation(5)
+            animate = new Animation(9)
             animate.frames = frames.data
         
 

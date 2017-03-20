@@ -1,10 +1,12 @@
 function Animation(speed) {
     this.frames = []
     this.setp = 0
-    this.interval = speed * 300
-    this._interval = speed * 50
+    this.interval = (10-speed) * 300
+    this._interval = (10-speed) * 100
     this.isNotmove = false
     this.status = 0
+          
+    $('.square').css('transition','transform '+this.interval/1000+'s linear')
 }
 
 Animation.prototype.play = function() {
@@ -46,9 +48,12 @@ Animation.prototype.prev = function() {
 Animation.prototype.update = function() {
     var frame = this.frames[this.setp]
     this.isNotmove = true
-    console.log(frame)
     for (var i = 0; i < frame.length; i++) {
-        if ($(frame[i].el)[0].style.transform != frame[i].css.transform) {
+        if (String($(frame[i].el)[0].style.transform) !== String(frame[i].css.transform)) {
+        console.log('----------------------------------------')
+        console.log($(frame[i].el)[0].style.transform)
+        console.log(frame[i].css.transform)
+            console.log('bucuobucuo')
             this.isNotmove = false
         }
         $(frame[i].el).css(frame[i].css)

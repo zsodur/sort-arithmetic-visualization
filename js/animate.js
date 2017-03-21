@@ -7,13 +7,14 @@ function Animation(json) {
 
     this.setSpeed(this.speed)
     this.callback = json.callback ? json.callback:function () {
+
     }
     
 }
 
 Animation.prototype.setSpeed = function(speed) {
     this.speed = speed
-    this.interval = (10-this.speed) * 200
+    this.interval = (10-this.speed) * 100
     this._interval = (10-this.speed) * 100
     if(this.frames[0]){
         for (var i = 0; i < this.frames[0].length; i++) {

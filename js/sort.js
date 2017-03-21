@@ -27,7 +27,7 @@ function sort1(frames) {
                 frames.normalSquare(minIndex)
                 minIndex = j
             } else {
-                frames.normalSquare(j)
+                frames.normalSquare(j,false)
             }
         }
         i !== minIndex && frames.exchangeSquare(i, minIndex)
@@ -124,7 +124,7 @@ function sort4(frames,arr) {
     var num = Math.ceil(length/2);
     var left = sort4(frames,arr.slice(0, num));
     var right = sort4(frames,arr.slice(num, length));
-    console.log(left,right)
+
     return merge(frames,left, right);
  
 }
@@ -175,7 +175,7 @@ frames.add()
         a.push(temp);
     }
   frames.add()
-  console.log('a',a)
+
   for (var i = 0; i < a.length-1; i++) {
         frames.changePositiony(a[i],false)
   }

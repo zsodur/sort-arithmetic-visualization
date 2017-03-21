@@ -62,7 +62,7 @@ Frames.prototype.moveSquare2 = function(i, j, isAdd = true) {
 Frames.prototype.moveSquare = function(i, j, isAdd = true) {
     // this.squares[i].css.left = j * 2.5 + 'rem'
     // this.squares[j].css.left = i * 2.5+ 'rem'
-    console.log(i)
+
     if (this.squares[i].positiony) {
         this.squares[i].css.transform = 'translate(' + (j - this.arr.length / 2 + 0.5) * 2.5 + 'rem' + ') '
         this.squares[i].positiony = 0
@@ -102,15 +102,10 @@ Frames.prototype.add = function() {
 
 Frames.prototype.creatData = function(fun) {
 
-     var start = new Date().getTime();
-
-    for (var i = 0; i < 1; i++) {
         this.data = []
         fun(this)
-    }
-    
-     var end = new Date().getTime();
-     console.log((end - start)+"ms")
+
+
 }
 
 Frames.prototype.normalSquare = function(i, isAdd = true) {

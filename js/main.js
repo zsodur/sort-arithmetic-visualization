@@ -1,5 +1,5 @@
 var select = {
-        data: [3],
+        data: [0],
         init: function() {
             var _this = this
             $('.sort').click(function() {
@@ -31,7 +31,7 @@ var select = {
             $('#array').bind('input propertychange', function() {
 
                 _this.creatSquares()
-                console.log(11111)
+
 
 
             });
@@ -95,21 +95,19 @@ var select = {
             //     return
             // }
 
-        if (arrStr.charAt(arrStr.length - 1) === ',') {
-            arrStr = arrStr.Substring(0, arrStr.Length - 1)
-        }
+        
         var arr = arrStr.split(",")
         var arrNum = []
         for (var i = 0; i < arr.length; i++) {
             var num = parseInt(arr[i])
-            console.log(num)
+
             if(!(isNaN(num))){
                 arrNum.push(num)
                 
             }
 
         }
-        console.log(arrNum)
+
 
         frames = new Frames(arrNum)
 
@@ -118,23 +116,51 @@ var select = {
 
         if (this.data.length === 2) {
             $('#container1').html('')
+
+            //test
+
+            var start = new Date().getTime();
+            for (var i = 0; i < 500; i++) {
+                $('#container3').html('')
+                frames.creatSquares('#container3')
+            frames.creatData(getSortFun(this.data[0]))
+            }
+            
+             var end = new Date().getTime();
+             console.log(this.data[0],end-start)
+
+
+
             frames.creatSquares('#container3')
             frames.creatData(getSortFun(this.data[0]))
             animate = new Animation({
                 speed:5,
                 frames:frames.data,
                 callback:function () {
-                    console.log('')
+
                     $('#startAndPause').html('开始')
                 }
             })
+
+
+            var start = new Date().getTime();
+            for (var i = 0; i < 500; i++) {
+                $('#container4').html('')
+                frames.creatSquares('#container4')
+            frames.creatData(getSortFun(this.data[1]))
+            }
+            
+             var end = new Date().getTime();
+             console.log(this.data[1],end-start)
+
+
             frames.creatSquares('#container4')
             frames.creatData(getSortFun(this.data[1]))
             animate2 = new Animation({
                 speed:5,
                 frames:frames.data,
                 callback:function () {
-                    console.log('')
+
                     $('#startAndPause').html('开始')
                 }
             })
@@ -151,7 +177,7 @@ var select = {
                 speed:5,
                 frames:frames.data,
                 callback:function () {
-                    console.log('')
+
                     $('#startAndPause').html('开始')
                 }
             })
@@ -169,7 +195,7 @@ var startSliderX
 $('#progressBar .slider').mousedown(function (e) {
     startMouseX = e.originalEvent.x || e.originalEvent.layerX || 0; 
     startSliderX = $(this).position().left
-    console.log(startMouseX,startSliderX)
+
     $('html').on('mousemove',sliderMove)
 
 
@@ -178,7 +204,7 @@ $('#progressBar .slider').mousedown(function (e) {
 $('html').mouseup(function (e) {
     $('html').off('mousemove',sliderMove)
     speed = $('#progressBar .slider').position().left/$('#progressBar').width() * 10 + 1
-    console.log(speed)
+
     animate && animate.setSpeed(speed)
     animate2 && animate2.setSpeed(speed)
     

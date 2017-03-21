@@ -101,8 +101,16 @@ Frames.prototype.add = function() {
 };
 
 Frames.prototype.creatData = function(fun) {
-    this.data = []
-    fun(this)
+
+     var start = new Date().getTime();
+
+    for (var i = 0; i < 1; i++) {
+        this.data = []
+        fun(this)
+    }
+    
+     var end = new Date().getTime();
+     console.log((end - start)+"ms")
 }
 
 Frames.prototype.normalSquare = function(i, isAdd = true) {

@@ -1,53 +1,93 @@
 var select = {
-    data: [5],
-    init: function() {
-        var _this = this
-        $('.sort').click(function() {
-            var index = $('.sort').index(this)
-            if (_this.data.indexOf(index) === -1) {
-                _this.data.push(index)
-            } else {
-                _this.data.splice(_this.data.indexOf(index), 1)
-            }
-            if (_this.data.length > 2) {
-                _this.data.shift()
-            }
-            
-
-            _this.creatSquares()
-        })
-
-        $('#array').bind('input propertychange', function() {
-
-            _this.creatSquares()
-            console.log(11111)
+        data: [3],
+        init: function() {
+            var _this = this
+            $('.sort').click(function() {
+                var index = $('.sort').index(this)
+                if (_this.data.indexOf(index) === -1) {
+                    _this.data.push(index)
+                } else {
+                    _this.data.splice(_this.data.indexOf(index), 1)
+                }
+                if (_this.data.length > 2) {
+                    _this.data.shift()
+                }
 
 
-        });
+                _this.creatSquares()
+            })
 
-        $('[type="button"]').click(function (  ) {
+            $('.sort').mouseover(function() {
+                var index = $('.sort').index(this)
+                $('#explain').css('display', 'block')
+                $('#explain div').css('display', 'none')
+                $('#explain div').eq(index).css('display', 'block')
+            })
+
+            $('.sort').mouseout(function() {
+                $('#explain').css('display', 'none')
+            })
+
+            $('#array').bind('input propertychange', function() {
+
+                _this.creatSquares()
+                console.log(11111)
+
+
+            });
+
+            $('#random').click(function() {
                 _this.random()
-        })
+            })
+
+            $('#startAndPause').click(function() {
+                if (animate) {
+                    if(animate.status === 0){
+                        animate.play()
+                animate2 && animate2.play()
+
+                        $(this).html('暂停')
+                    }else{
+
+                        animate.stop()
+                        animate2 && animate2.stop()
+                        $(this).html('开始')
+                    }
+                }
+                
+            })
+            $('#prev').click(function() {
+                animate && animate.prev()
+                animate2 && animate2.prev()
+            })
+
+            $('#next').click(function() {
+                animate && animate.next()
+                animate2 && animate2.next()
+            })
+
+
+        
 
     },
-    random:function () {
+    random: function() {
 
-        var num = Math.random()*5 + 10
+        var num = Math.random() * 5 + 10
         num = parseInt(num, 10)
         var arr = []
         for (var i = 0; i < num; i++) {
-            arr.push(parseInt((Math.random()*10 + 1),10))
+            arr.push(parseInt((Math.random() * 10 + 1), 10))
         }
         $('#array').val(arr.join(','))
         this.creatSquares()
 
-        
+
     },
     creatSquares: function() {
-$('.sort').removeClass('sortActive')
-            for (var i = 0; i < this.data.length; i++) {
-                $('.sort').eq(this.data[i]).addClass('sortActive')
-            }
+        $('.sort').removeClass('sortActive')
+        for (var i = 0; i < this.data.length; i++) {
+            $('.sort').eq(this.data[i]).addClass('sortActive')
+        }
         animate && animate.close()
         animate2 && animate2.close()
         var arrStr = $('#array').val()
@@ -61,7 +101,12 @@ $('.sort').removeClass('sortActive')
         var arr = arrStr.split(",")
         var arrNum = []
         for (var i = 0; i < arr.length; i++) {
-            arrNum.push(parseInt(arr[i]))
+            var num = parseInt(arr[i])
+            console.log(num)
+            if(!(isNaN(num))){
+                arrNum.push(num)
+                
+            }
 
         }
         console.log(arrNum)
@@ -75,24 +120,42 @@ $('.sort').removeClass('sortActive')
             $('#container1').html('')
             frames.creatSquares('#container3')
             frames.creatData(getSortFun(this.data[0]))
-            animate = new Animation(9)
-            animate.frames = frames.data
+            animate = new Animation({
+                speed:5,
+                frames:frames.data,
+                callback:function () {
+                    console.log('')
+                    $('#startAndPause').html('开始')
+                }
+            })
             frames.creatSquares('#container4')
             frames.creatData(getSortFun(this.data[1]))
-            animate2 = new Animation(9)
-            animate2.frames = frames.data
+            animate2 = new Animation({
+                speed:5,
+                frames:frames.data,
+                callback:function () {
+                    console.log('')
+                    $('#startAndPause').html('开始')
+                }
+            })
             return
         }
-            $('#container3').html('')
-            $('#container4').html('')
+        $('#container3').html('')
+        $('#container4').html('')
         frames.creatSquares('#container1')
         if (this.data.length === 0) {
             return
         }
-            frames.creatData(getSortFun(this.data[0]))
-            animate = new Animation(9)
-            animate.frames = frames.data
-        
+        frames.creatData(getSortFun(this.data[0]))
+        animate = new Animation({
+                speed:5,
+                frames:frames.data,
+                callback:function () {
+                    console.log('')
+                    $('#startAndPause').html('开始')
+                }
+            })
+
 
     }
 }
@@ -101,63 +164,61 @@ var animate2;
 select.init()
 select.random()
 
+var startMouseX;
+var startSliderX
+$('#progressBar .slider').mousedown(function (e) {
+    startMouseX = e.originalEvent.x || e.originalEvent.layerX || 0; 
+    startSliderX = $(this).position().left
+    console.log(startMouseX,startSliderX)
+    $('html').on('mousemove',sliderMove)
+
+
+})
+
+$('html').mouseup(function (e) {
+    $('html').off('mousemove',sliderMove)
+    speed = $('#progressBar .slider').position().left/$('#progressBar').width() * 10 + 1
+    console.log(speed)
+    animate && animate.setSpeed(speed)
+    animate2 && animate2.setSpeed(speed)
+    
+
+})
+
+function sliderMove(e) {
+    var nowMouseX = e.originalEvent.x || e.originalEvent.layerX || 0; 
+
+    var x = nowMouseX - startMouseX
+    if ((startSliderX+x)<=0 || (startSliderX+x)>$('#progressBar').width()-$('#progressBar .slider').width()) {
+        return
+    }
+    $('#progressBar .slider').css('left',startSliderX+x+'px')
+    
+
+}
+
+
+
+
+
+
+
+
+
 
 function getSortFun(index) {
     switch (index) {
         case 0:
             return sort1
-            break;
         case 1:
             return sort2
-            break;
         case 2:
             return sort3
-            break;
         case 3:
             return sort4
-            break;
         case 4:
             return sort5
-            break;
         case 5:
             return sort6
-            break;
     }
-}
-
-// var p = [3,6,1,7,9,3,6,8,6,1];
-// var p = [32,5,1,5,4,3,2];
-
-
-
-
-// frames2 = new Frames(p)
-// frames2.creatdivs('#container2')
-// frames2.creatData(sort2)
-// animate2 = new Animation(5)
-// animate2.frames = frames2.data
-// animate2.play()
-
-document.getElementById('btn1').onclick = function() {
-    // frames.creatData(sort4)
-    // animate = new Animation(6)
-    // animate.frames = frames.data
-    // animate.play()
-
-
-    animate.play()
-    animate2 && animate2.play()
-        // animate2.play()
-}
-document.getElementById('btn2').onclick = function() {
-    animate.next()
-        // animate2.next()
-}
-document.getElementById('btn3').onclick = function() {
-    animate.prev()
-        // animate2.prev()
-}
-document.getElementById('btn4').onclick = function() {
-    animate.stop()
-        // animate2.stop()
 }

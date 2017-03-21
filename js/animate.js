@@ -1,12 +1,26 @@
-function Animation(speed) {
-    this.frames = []
+function Animation(json) {
+    this.speed = json.speed ? json.speed:5
+    this.frames = json.frames ? json.frames:[]
     this.setp = 0
-    this.interval = (10-speed) * 300
-    this._interval = (10-speed) * 100
     this.isNotmove = false
     this.status = 0
-          
-    $('.square').css('transition','transform '+this.interval/1000+'s linear')
+
+    this.setSpeed(this.speed)
+    this.callback = json.callback ? json.callback:function () {
+    }
+    
+}
+
+Animation.prototype.setSpeed = function(speed) {
+    this.speed = speed
+    this.interval = (10-this.speed) * 200
+    this._interval = (10-this.speed) * 100
+    if(this.frames[0]){
+        for (var i = 0; i < this.frames[0].length; i++) {
+
+            $(this.frames[0][i].el).css('transition','transform '+this.interval/1000+'s linear')
+        }
+    }
 }
 
 Animation.prototype.play = function() {
@@ -34,6 +48,7 @@ Animation.prototype.run = function() {
             _this.run()
         } else {
             _this.status = 0
+            _this.callback()
         }
     }, interval)
 }
@@ -46,14 +61,15 @@ Animation.prototype.prev = function() {
     this.update()
 }
 Animation.prototype.update = function() {
+
     var frame = this.frames[this.setp]
     this.isNotmove = true
     for (var i = 0; i < frame.length; i++) {
         if (String($(frame[i].el)[0].style.transform) !== String(frame[i].css.transform)) {
-        console.log('----------------------------------------')
-        console.log($(frame[i].el)[0].style.transform)
-        console.log(frame[i].css.transform)
-            console.log('bucuobucuo')
+
+
+
+
             this.isNotmove = false
         }
         $(frame[i].el).css(frame[i].css)

@@ -13,12 +13,12 @@ function clone(p, c) {
 
 // 选择
 function sort1(frames) {
+    frames.add()
 
     for (var i = 0; i < frames.squares.length - 1; i++) {
-        frames.add()
-        minObj = clone(frames.squares[i])
+        var minObj = clone(frames.squares[i])
+        var minIndex = i
         frames.activeSquare(i)
-        minIndex = i
         for (var j = i + 1; j < frames.squares.length; j++) {
             frames.active2Square(j)
             if (minObj.val > frames.squares[j].val) {
@@ -27,7 +27,7 @@ function sort1(frames) {
                 frames.normalSquare(minIndex)
                 minIndex = j
             } else {
-                frames.normalSquare(j, false)
+                frames.normalSquare(j)
             }
         }
         i !== minIndex && frames.exchangeSquare(i, minIndex)
@@ -39,12 +39,13 @@ function sort1(frames) {
 
 // 冒泡
 function sort2(frames) {
-    for (var i = 0; i < frames.squares.length - 1; i++) {
         frames.add()
+    for (var i = 0; i < frames.squares.length - 1; i++) {
         frames.activeSquare(i)
         for (var j = i + 1; j < frames.squares.length; j++) {
             frames.active2Square(j)
             if (frames.squares[i].val > frames.squares[j].val) {
+                frames.active2Square(i,false)
                 frames.activeSquare(j)
                 frames.exchangeSquare(i, j)
                 frames.normalSquare(j)
@@ -65,7 +66,11 @@ function sort3(frames,arr,arr2) {
         a.push(i)
     }
     var arr = arr || a
-    if (arr.length <= 1) { return}
+    if (arr.length <= 1) { 
+        if (arr[0]) {
+            frames.finishSquare(arr[0],false)
+        }
+        return}
     for (var i = 0; i < frames.squares.length; i++){
         if(arr.indexOf(i)===-1){
             frames.darkSquare(i,false)
@@ -78,13 +83,13 @@ function sort3(frames,arr,arr2) {
 　　var pivot = frames.squares[arr[pivotIndex]]; // {val:,el:,css:}
 　　var left = [];
 　　var right = [];
-    frames.finishSquare(arr[pivotIndex])
+    frames.activeSquare(arr[pivotIndex],false)
     frames.moveSquare(arr[pivotIndex],pivot.positionx)
     var ggggg = frames.squares[arr[0]].positionx
 　　for (var i = 0; i < arr.length; i++){
         if(arr[i]===arr[pivotIndex]){continue;}
         frames.active2Square(arr[i])
-　　　　if (frames.squares[arr[i]].val < pivot.val) {
+　　　　if (frames.squares[arr[i]].val <= pivot.val) {
             frames.moveSquare(arr[i],pivot.positionx-left.length-1)
 　　　　　　left.unshift(arr[i]);
 　　　　} else {
@@ -93,6 +98,8 @@ function sort3(frames,arr,arr2) {
 　　　　}
         frames.normalSquare(arr[i],false)
 　　}
+    frames.finishSquare(arr[pivotIndex],false)
+
     var bbbb = Math.floor((left.length-right.length)/2)
     for (var i = 0; i < arr.length; i++) {
          frames.moveSquare(arr[i],frames.squares[arr[i]].positionx+bbbb,false)
@@ -101,17 +108,12 @@ function sort3(frames,arr,arr2) {
 
     sort3(frames,left)    
     sort3(frames,right)  
-//     for (var i = 0; i < frames.squares.length; i++){
-//         frames.lightSquare(i,false)
-//         frames.finishSquare(i,false)
-// 　　}  
-//     frames.add()
+      
 };
 
 // 归并
 function sort4(frames,arr) {
   
-    // frames.add()
   var a = []
     for (var i = 0; i < frames.squares.length; i++) {
         a.push(i)
@@ -128,6 +130,7 @@ function sort4(frames,arr) {
 }
 
 function merge(frames,left, right) {
+    frames.add()
     for (var i = 0; i < frames.squares.length; i++){
         if(left.indexOf(i)===-1 && right.indexOf(i)===-1){
             frames.darkSquare(i,false)
@@ -247,16 +250,22 @@ function sort6(frames) {
 function sort6(frames) {
     frames.add()
     var len = frames.squares.length;
-    for (var fraction = Math.floor(len / 2); fraction > 0; fraction = Math.floor(fraction / 2)) {
-        for (var i = fraction; i < len; i++) {
-            frames.finishSquare(i)
-            for (var j = i - fraction; j >= 0; j -= fraction) {
+    for (var gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
+        for (var i = gap; i < len; i++) {
+            for (var j = i - gap; j >= 0; j -= gap) {
 
-            frames.activeSquare(j)
-            frames.active2Square(fraction + j)
-                if (frames.squares[j].val > frames.squares[fraction + j].val) {
-                frames.exchangeSquare(j, fraction + j)
+                frames.activeSquare(j)
+                frames.active2Square(gap + j)
+                if (frames.squares[j].val > frames.squares[gap + j].val) {
+                    frames.exchangeSquare(j, gap + j)
+                    frames.normalSquare(j ,false)
+                frames.normalSquare(gap + j)
+                } else {
+                    frames.normalSquare(j,false)
+                frames.normalSquare(gap + j)
+                    break
                 }
+
             }
 
         }

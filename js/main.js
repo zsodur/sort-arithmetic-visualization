@@ -117,17 +117,10 @@ var select = {
         if (this.data.length === 2) {
             $('#container1').html('')
 
-            //test
-
-            var start = new Date().getTime();
-            for (var i = 0; i < 500; i++) {
-                $('#container3').html('')
+            
                 frames.creatSquares('#container3')
             frames.creatData(getSortFun(this.data[0]))
-            }
-            
-             var end = new Date().getTime();
-             console.log(this.data[0],end-start)
+           
 
 
 
@@ -143,15 +136,10 @@ var select = {
             })
 
 
-            var start = new Date().getTime();
-            for (var i = 0; i < 500; i++) {
-                $('#container4').html('')
+            
                 frames.creatSquares('#container4')
             frames.creatData(getSortFun(this.data[1]))
-            }
             
-             var end = new Date().getTime();
-             console.log(this.data[1],end-start)
 
 
             frames.creatSquares('#container4')

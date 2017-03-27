@@ -19,17 +19,8 @@ var select = {
                 return sort6
         }
     },
-    activeBtn:function () {
-        $('.sort').removeClass('sortActive')
-        for (var i = 0; i < this.data.length; i++) {
-            $('.sort').eq(this.data[i]).addClass('sortActive')
-        }
-    },
     init: function() {
-        this.activeBtn()
-        var _this = this
         $('.sort').click(function() {
-
             var index = $('.sort').index(this)
 
             if (_this.data.indexOf(index) === -1) {
@@ -42,8 +33,6 @@ var select = {
                 _this.data.shift()
             }
             container.creatSquares()
-             _this.activeBtn()
-            
         })
         $('.sort').mouseover(function() {
             var index = $('.sort').index(this)
@@ -81,7 +70,7 @@ var controller = {
                 arrNum.push(num)
             }
         }
-        return arrNum
+        return arrum
     },
     random: function() {
 
@@ -95,7 +84,6 @@ var controller = {
         container.creatSquares()
     },
     init: function() {
-        this.random()
         var _this = this
         $('#array').bind('input propertychange', function() {
             container.creatSquares()
@@ -140,16 +128,6 @@ var controller = {
             animate && animate.setSpeed(speed)
             animate2 && animate2.setSpeed(speed)
         })
-        function sliderMove(e) {
-    var nowMouseX = e.originalEvent.x || e.originalEvent.layerX || 0;
-    var x = nowMouseX - startMouseX
-    if ((startSliderX + x) <= 0 || (startSliderX + x) > $('#progressBar').width() - $('#progressBar .slider').width()) {
-        return
-    }
-    $('#progressBar .slider').css('left', startSliderX + x + 'px')
-
-
-}
 
     }
 }

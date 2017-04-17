@@ -1,9 +1,13 @@
 var select = {
     data: [0],
+
     getNum: function() {
+
         return this.data.length
     },
+
     getSortFun: function(index) {
+
         switch (this.data[index]) {
             case 0:
                 return sort1
@@ -19,17 +23,20 @@ var select = {
                 return sort6
         }
     },
-    activeBtn:function () {
+
+    activeBtn: function() {
+
         $('.sort').removeClass('sortActive')
         for (var i = 0; i < this.data.length; i++) {
             $('.sort').eq(this.data[i]).addClass('sortActive')
         }
     },
+
     init: function() {
+
         this.activeBtn()
         var _this = this
         $('.sort').click(function() {
-
             var index = $('.sort').index(this)
 
             if (_this.data.indexOf(index) === -1) {
@@ -42,39 +49,39 @@ var select = {
                 _this.data.shift()
             }
             container.creatSquares()
-             _this.activeBtn()
-            
+            _this.activeBtn()
         })
         $('.sort').mouseover(function() {
             var index = $('.sort').index(this)
             explain.show(index)
         })
-
         $('.sort').mouseout(function() {
             explain.hide()
         })
-
     }
-
-
 }
 
 var explain = {
     show: function(index) {
+
         $('#explain').css('display', 'block')
         $('#explain div').css('display', 'none')
         $('#explain div').eq(index).css('display', 'block')
     },
+
     hide: function() {
+
         $('#explain').css('display', 'none')
     }
 }
 
 var controller = {
     getArr: function() {
+
         var arrStr = $('#array').val()
         var arr = arrStr.split(",")
         var arrNum = []
+
         for (var i = 0; i < arr.length; i++) {
             var num = parseInt(arr[i])
             if (!(isNaN(num))) {
@@ -83,11 +90,13 @@ var controller = {
         }
         return arrNum
     },
+
     random: function() {
 
         var num = Math.random() * 5 + 10
         num = parseInt(num, 10)
         var arr = []
+
         for (var i = 0; i < num; i++) {
             arr.push(parseInt((Math.random() * 10 + 1), 10))
         }
@@ -95,6 +104,7 @@ var controller = {
         container.creatSquares()
     },
     init: function() {
+
         this.random()
         var _this = this
         $('#array').bind('input propertychange', function() {
@@ -104,7 +114,9 @@ var controller = {
             _this.random()
         })
         $('#startAndPause').click(function() {
+
             if (animate) {
+
                 if (animate.status === 0) {
                     animate.play()
                     animate2 && animate2.play()
@@ -115,18 +127,15 @@ var controller = {
                     $(this).html('开始')
                 }
             }
-
         })
         $('#prev').click(function() {
             animate && animate.prev()
             animate2 && animate2.prev()
         })
-
         $('#next').click(function() {
             animate && animate.next()
             animate2 && animate2.next()
         })
-
         var startMouseX;
         var startSliderX
         $('#progressBar .slider').mousedown(function(e) {
@@ -140,30 +149,30 @@ var controller = {
             animate && animate.setSpeed(speed)
             animate2 && animate2.setSpeed(speed)
         })
+
         function sliderMove(e) {
-    var nowMouseX = e.originalEvent.x || e.originalEvent.layerX || 0;
-    var x = nowMouseX - startMouseX
-    if ((startSliderX + x) <= 0 || (startSliderX + x) > $('#progressBar').width() - $('#progressBar .slider').width()) {
-        return
-    }
-    $('#progressBar .slider').css('left', startSliderX + x + 'px')
-
-
-}
-
+            var nowMouseX = e.originalEvent.x || e.originalEvent.layerX || 0;
+            var x = nowMouseX - startMouseX
+            if ((startSliderX + x) <= 0 || (startSliderX + x) > $('#progressBar').width() - $('#progressBar .slider').width()) {
+                return
+            }
+            $('#progressBar .slider').css('left', startSliderX + x + 'px')
+        }
     }
 }
 
 var container = {
     clear: function() {
+
         $('#container1').html('')
         $('#container3').html('')
         $('#container4').html('')
         animate && animate.close()
         animate2 && animate2.close()
     },
-    creatSquares: function() {
 
+    creatSquares: function() {
+        
         this.clear()
         var arr = controller.getArr()
         frames = new Frames(arr)
@@ -196,7 +205,6 @@ var container = {
                     $('#startAndPause').html('开始')
                 }
             })
-
             frames.creatSquares('#container4')
             frames.creatData(select.getSortFun(1))
             animate2 = new Animation({
@@ -209,7 +217,6 @@ var container = {
         }
     }
 }
-
 
 var animate
 var animate2

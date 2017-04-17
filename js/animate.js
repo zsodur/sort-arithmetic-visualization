@@ -35,6 +35,7 @@ Animation.prototype.setSpeed = function(speed) {
 Animation.prototype.play = function() {
 
     if (this.status === 0) {
+
         if (this.setp === 0) {
             this.onstart()
         }
@@ -85,6 +86,7 @@ Animation.prototype.update = function() {
     var frame = this.frames[this.setp]
     this.isNotmove = true
     console.log(frame)
+    
     for (var i = 0; i < frame.length; i++) {
 
         if (String($(frame[i].el)[0].style.transform) !== String(frame[i].css.transform)) {

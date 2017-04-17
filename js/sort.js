@@ -1,6 +1,8 @@
 function clone(p, c) {
     var c = c || {};
+
     for (var prop in p) {
+
         if (typeof p[prop] === 'object') {
             c[prop] = (p[prop].constructor === Array) ? [] : {}
             clone(p[prop], c[prop])
@@ -77,6 +79,7 @@ function sort3(frames,arr,arr2) {
     var arr = arr || a
 
     if (arr.length <= 1) { 
+
         if (arr[0]) {
             frames.finishSquare(arr[0],false)
         }
@@ -219,11 +222,14 @@ function sort5(frames){
         frames.activeSquare(i,false)
         frames.moveSquare(i,i)
         frames.active2Square(i-1)
+
         if(frames.squares[i].val < frames.squares[i-1].val){
             var guardIndex = i
             var j = i 
+
             for (var k = j; k > 0; k--) {
                 frames.active2Square(k-1)
+
                 if(frames.squares[k].val < frames.squares[k-1].val){
                     frames.exchangeSquare(k-1,k)
                     frames.finishSquare(k,false)
@@ -236,7 +242,7 @@ function sort5(frames){
             frames.finishSquare(j,false)
             frames.moveSquare(j,j)     
         }else{
-            
+
             for (var k = 0; k < i; k++) {
                 frames.finishSquare(k, false)
             }
@@ -248,16 +254,19 @@ function sort5(frames){
 
 // 希尔
 function sort6(frames) {
+
     frames.add()
     var length = frames.squares.length;
     var gap = Math.round(length / 2);
 
     for (gap; gap > 0; gap = Math.round(gap / 2 - 0.1)) {
+
         for (var i = gap; i < length; i++) {
             frames.activeSquare(i)
             var insert =  frames.squares[i].val;
             var index = i;
             var index2;
+
             for (var j = i; j >= 0; j -= gap) {
                 frames.active2Square(j)
                 
@@ -276,26 +285,28 @@ function sort6(frames) {
 }
 
 function sort6(frames) {
+
     frames.add()
     var len = frames.squares.length;
-    for (var gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
-        for (var i = gap; i < len; i++) {
-            for (var j = i - gap; j >= 0; j -= gap) {
 
+    for (var gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
+
+        for (var i = gap; i < len; i++) {
+
+            for (var j = i - gap; j >= 0; j -= gap) {
                 frames.activeSquare(j)
                 frames.active2Square(gap + j)
+
                 if (frames.squares[j].val > frames.squares[gap + j].val) {
                     frames.exchangeSquare(j, gap + j)
                     frames.normalSquare(j ,false)
                 frames.normalSquare(gap + j)
                 } else {
                     frames.normalSquare(j,false)
-                frames.normalSquare(gap + j)
+                    frames.normalSquare(gap + j)
                     break
                 }
-
             }
-
         }
     }
 }

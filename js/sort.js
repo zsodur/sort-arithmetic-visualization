@@ -294,7 +294,7 @@ function sort6(frames) {
         for (var i = gap; i < len; i++) {
 
             for (var j = i - gap; j >= 0; j -= gap) {
-                frames.activeSquare(j)
+                frames.activeSquare(j,false)
                 frames.active2Square(gap + j)
 
                 if (frames.squares[j].val > frames.squares[gap + j].val) {

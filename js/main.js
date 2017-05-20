@@ -61,19 +61,6 @@ var select = {
     }
 }
 
-var explain = {
-    show: function(index) {
-
-        $('#explain').css('display', 'block')
-        $('#explain div').css('display', 'none')
-        $('#explain div').eq(index).css('display', 'block')
-    },
-
-    hide: function() {
-
-        $('#explain').css('display', 'none')
-    }
-}
 
 var controller = {
     getArr: function() {

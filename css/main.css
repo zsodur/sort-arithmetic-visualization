@@ -17,15 +17,12 @@ body {
 	border:0;
 }
 .nav{
-	width: 6rem;
-	height: 32rem;
 	position: absolute;
 	top: 50%;
 	left: 0;
+	width: 6rem;
+	height: 32rem;
 	-webkit-transform: translate(0,-50%);
-	-moz-transform: translate(0,-50%);
-	-ms-transform: translate(0,-50%);
-	-o-transform: translate(0,-50%);
 	transform: translate(0,-50%);
 }
 
@@ -33,8 +30,8 @@ body {
 	width: 100rem;
 	height: 2rem;
 	margin-top: 1rem;
-	line-height: 3rem;
 	margin-bottom:2rem;
+	line-height: 3rem;
 }
 
 .array input[type="text"]{
@@ -50,16 +47,16 @@ body {
 }
 
 .sort{
-	background: #394453;
+	position: relative;
 	width: 100%;
 	height:3rem;
 	margin-top: 1rem;
-	font-family: "Microsoft Yahei";
-	line-height: 3rem;
 	text-align:center;
+	line-height: 3rem;
+	font-family: "Microsoft Yahei";
 	color: #fff;
 	cursor: pointer;
-	position: relative;
+	background: #394453;
 
 }
 
@@ -71,20 +68,17 @@ body {
 	height: 35%;
 	width: 2rem;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
 }
 
 #container1 div ,
 #container3 div,
 #container4 div{
-    height: 0;
-    background: #4786b2;
     position: absolute;
     bottom: 0;
+    height: 0;
     text-align: center;
+    background: #4786b2;
 }
 
 #container1 div span,
@@ -94,9 +88,6 @@ body {
 	bottom:0rem;
 	color: #1b2027;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
 
 }
@@ -109,9 +100,6 @@ body {
 	height: 90%;
 	width: 20rem;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
 }
 
@@ -120,12 +108,9 @@ body {
     position: absolute;
 	top: 0rem;
 	left: 50%;
-	height: 20%;
 	width: 2rem;
+	height: 20%;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
 
 }
@@ -138,9 +123,6 @@ body {
 	height: 20%;
 	width: 2rem;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
 
 }
@@ -153,14 +135,11 @@ body {
 #controller{
 	display: inline-block;
 	position: absolute;
-	bottom: 0;
 	left: 50%;
+	bottom: 0;
 	width: 60rem;
 	height: 2rem;
 	-webkit-transform: translate(-50%,0);
-	-moz-transform: translate(-50%,0);
-	-ms-transform: translate(-50%,0);
-	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0);
  	
 }
@@ -168,15 +147,14 @@ body {
 #controller input{
 	width: 12rem;
 	height: 2rem;
-	font-size: 1rem;
 	padding: 0 0.5rem 0 0.5rem;
-	background: #394453;
+	font-size: 1rem;
 	color: #fff;
+	background: #394453;
 
 }
 
 #controller .button{
-	background: #394453;
 	display: inline-block;
 	width: 6rem;
 	height: 2rem;
@@ -184,8 +162,7 @@ body {
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
-
-
+	background: #394453;
 }
 
 #random{
@@ -193,44 +170,25 @@ body {
 }
 
 #progressBar{
-	background: #394453;
 	display: inline-block;
+	position: relative;
 	width: 14rem;
 	height: 2rem;
 	margin-left: 1rem;
 	line-height: 2rem;
 	text-align: center;
 	color: #fff;
-	position: relative;
-
+	background: #394453;
 }
 
 #progressBar .slider{
 	position: absolute;
-	width: 1rem;
-	height: 2rem;
-	background: #fff;
 	top: 0;
 	left: 4rem;
+	width: 1rem;
+	height: 2rem;
 	cursor: pointer;
-}
-
-#explain{
-	width: 30rem;
-	background: rgba(57,68,83,0.7);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	padding: 2rem;
-	text-indent: 2rem;	
-	line-height: 1.5rem;
-	color: #fff;
-	display: none;
-}
-
-#explain div{
-	display: none;
+	background: #fff;
 }
 
 

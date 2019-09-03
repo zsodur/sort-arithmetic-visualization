@@ -43,29 +43,26 @@ function sort1(frames) {
 }
 
 // 冒泡
-function sort2(frames) {
+function sort2(frames){
 
     frames.add()
 
-    for (var i = 0; i < frames.squares.length - 1; i++) {
-        frames.activeSquare(i)
+    for(var i = 0; i < frames.squares.length; i++){//循环的趟数
 
-        for (var j = i + 1; j < frames.squares.length; j++) {
-            frames.active2Square(j)
+        for(var j = 0; j < frames.squares.length - i - 1 ; j++){//循环的次数arr.length-i将已经排好的数去掉
+            frames.activeSquare(j)
+            frames.active2Square(j + 1)
 
-            if (frames.squares[i].val > frames.squares[j].val) {
-                frames.active2Square(i,false)
-                frames.activeSquare(j)
-                frames.exchangeSquare(i, j)
-                frames.normalSquare(j)
+            if(frames.squares[j].val > frames.squares[j + 1].val){
+              frames.exchangeSquare(j, j+1)
+              frames.normalSquare(j, false)
             } else {
-                frames.normalSquare(j, false)
+              frames.normalSquare(j, false)
             }
         }
-        frames.finishSquare(i)
-    }
-    frames.finishSquare(frames.squares.length - 1)
-
+        frames.finishSquare(frames.squares.length - i - 1)
+  }
+  frames.finishSquare(frames.squares.length - 1)
 }
 
 // 快速
@@ -78,7 +75,7 @@ function sort3(frames,arr,arr2) {
     }
     var arr = arr || a
 
-    if (arr.length <= 1) { 
+    if (arr.length <= 1) {
 
         if (arr[0]) {
             frames.finishSquare(arr[0],false)
@@ -126,13 +123,13 @@ function sort3(frames,arr,arr2) {
          frames.moveSquare(arr[i],frames.squares[arr[i]].positionx+bbbb,false)
     }
     frames.add()
-    sort3(frames,left)    
-    sort3(frames,right)  
+    sort3(frames,left)
+    sort3(frames,right)
 };
 
 // 归并
 function sort4(frames,arr) {
-  
+
     var a = []
 
     for (var i = 0; i < frames.squares.length; i++) {
@@ -141,14 +138,14 @@ function sort4(frames,arr) {
     var arr = arr || a
     var length = arr.length;
 
-    if (arr.length <= 1) { 
+    if (arr.length <= 1) {
         return arr
     }
     var num = Math.ceil(length/2);
     var left = sort4(frames,arr.slice(0, num));
     var right = sort4(frames,arr.slice(num, length));
     return merge(frames,left, right);
- 
+
 }
 
 function merge(frames,left, right) {
@@ -225,7 +222,7 @@ function sort5(frames){
 
         if(frames.squares[i].val < frames.squares[i-1].val){
             var guardIndex = i
-            var j = i 
+            var j = i
 
             for (var k = j; k > 0; k--) {
                 frames.active2Square(k-1)
@@ -240,7 +237,7 @@ function sort5(frames){
                 }
             }
             frames.finishSquare(j,false)
-            frames.moveSquare(j,j)     
+            frames.moveSquare(j,j)
         }else{
 
             for (var k = 0; k < i; k++) {
@@ -269,7 +266,7 @@ function sort6(frames) {
 
             for (var j = i; j >= 0; j -= gap) {
                 frames.active2Square(j)
-                
+
                 if ( insert < frames.squares[j].val) {
 
                     frames.finishSquare(j+gap)
@@ -279,7 +276,7 @@ function sort6(frames) {
                     frames.normalSquare(j)
                 }
             }
-           
+
         }
     }
 }
